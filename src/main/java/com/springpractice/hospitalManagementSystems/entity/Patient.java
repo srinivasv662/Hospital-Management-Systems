@@ -36,11 +36,13 @@ public class Patient {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_insurance", unique = true)
     private Insurance insurance;  // owning side
 
-    @OneToMany(mappedBy = "patient")  // inverse side
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)  // inverse side, Patient side is the Parent side in the data domain
+    // when we delete the patient, it's appointments also should be deleted. inverse side is at the JPA end.
     private Set<Appointment> appointments = new HashSet<>();
 
 }

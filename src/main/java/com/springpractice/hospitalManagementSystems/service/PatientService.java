@@ -43,4 +43,10 @@ public class PatientService {
 //            true
 //    Hibernate: update patient set birth_date=?,blood_group=?,email=?,gender=?,name=? where id=?
 
+    @Transactional
+    public void deletePatient(Long patientId) {
+        patientRepository.findById(patientId).orElseThrow();
+        patientRepository.deleteById(patientId);
+    }
+
 }
